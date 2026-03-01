@@ -88,3 +88,4 @@ Desktop.ini
 _ReSharper*/
 *.resharper
 *.DotSettings.user
+TurnosAPI.API/appsettings.json
