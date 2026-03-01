@@ -1,0 +1,90 @@
+# ================================
+# Archivos de usuario / IDE
+# ================================
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ================================
+# Build / Resultados
+# ================================
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+AnyCPU/
+build/
+
+# ================================
+# Archivos temporales
+# ================================
+*.tmp
+*.temp
+*.log
+*.bak
+*.cache
+
+# ================================
+# NuGet
+# ================================
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+packages.lock.json
+
+# ================================
+# Publicación
+# ================================
+publish/
+app.publish/
+
+# ================================
+# Archivos de configuración locales
+# ================================
+appsettings.Development.json
+appsettings.Local.json
+
+# ================================
+# Base de datos
+# ================================
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# ================================
+# Test / Coverage
+# ================================
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# ================================
+# Azure / Docker
+# ================================
+.azure/
+docker-compose.override.yml
+
+# ================================
+# Mac / Linux / Windows
+# ================================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ================================
+# Otros
+# ================================
+_ReSharper*/
+*.resharper
+*.DotSettings.user
