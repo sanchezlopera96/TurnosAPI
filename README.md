@@ -16,6 +16,25 @@
 | FluentAssertions | 6.12 | Aserciones en pruebas |
 | coverlet | 6.0 | Cobertura de código |
 
+Clean Architecture con 4 capas:
+```
+TurnosAPI/
+├── TurnosAPI.Domain/          ← Entidades, Enums, Interfaces, Excepciones
+├── TurnosAPI.Application/     ← Servicios, DTOs, Interfaces
+├── TurnosAPI.Infrastructure/  ← EF Core, Repositorios, JWT, BCrypt
+├── TurnosAPI.API/             ← Controladores, Middleware, Servicios en segundo plano
+└── TurnosAPI.Tests/           ← Pruebas unitarias con xUnit + Moq
+```
+
+![alt text](arquitectura.png)
+
+### Patrones y Principios de Diseño
+- **SOLID** — Aplicado en todas las capas
+- **GRASP** — Experto en Información, Controlador, Creador, Bajo Acoplamiento, Alta Cohesión
+- **Patrón Repositorio** — Abstrae el acceso a datos de la lógica de negocio
+- **Unidad de Trabajo (Unit of Work)** — Coordina transacciones atómicas entre repositorios
+- **Clean Architecture** — Las dependencias apuntan hacia adentro, el dominio no tiene dependencias externas
+
 ## Requisitos Previos
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8)
