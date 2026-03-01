@@ -1,0 +1,317 @@
+<mxfile host="app.diagrams.net" modified="2024-01-01T00:00:00.000Z" agent="Claude" version="21.0.0">
+
+  <!-- DIAGRAMA 1: Arquitectura Clean Architecture -->
+  <diagram id="clean-architecture" name="Clean Architecture">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title1" value="Arquitectura Clean Architecture — TurnosAPI" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#1a2047;" vertex="1" parent="1">
+          <mxGeometry x="327" y="20" width="600" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Domain Layer -->
+        <mxCell id="domain-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#272673;strokeWidth=3;opacity=50;" vertex="1" parent="1">
+          <mxGeometry x="100" y="100" width="1060" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="domain-label" value="🔵 Domain Layer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#272673;" vertex="1" parent="1">
+          <mxGeometry x="110" y="105" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="appointment-entity" value="&lt;b&gt;Appointment&lt;/b&gt;&lt;br/&gt;- Code&lt;br/&gt;- CustomerIdNumber&lt;br/&gt;- Status&lt;br/&gt;- ExpiresAt&lt;br/&gt;+ Activate()&lt;br/&gt;+ Expire()&lt;br/&gt;+ Cancel()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="120" y="140" width="160" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="branch-entity" value="&lt;b&gt;Branch&lt;/b&gt;&lt;br/&gt;- Name&lt;br/&gt;- Address&lt;br/&gt;- City&lt;br/&gt;- IsActive&lt;br/&gt;+ Update()&lt;br/&gt;+ Activate()&lt;br/&gt;+ Deactivate()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="140" width="160" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="adminuser-entity" value="&lt;b&gt;AdminUser&lt;/b&gt;&lt;br/&gt;- Username&lt;br/&gt;- PasswordHash&lt;br/&gt;- FullName&lt;br/&gt;- Role&lt;br/&gt;+ UpdatePassword()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="480" y="140" width="160" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="iappointmentrepo" value="&lt;b&gt;&lt;&lt;interface&gt;&gt;&lt;/b&gt;&lt;br/&gt;&lt;b&gt;IAppointmentRepository&lt;/b&gt;&lt;br/&gt;+ GetByIdAsync()&lt;br/&gt;+ GetByCustomerAsync()&lt;br/&gt;+ CountByCustomerTodayAsync()&lt;br/&gt;+ GetExpiredPendingAsync()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#272673;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="660" y="140" width="200" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="iunitofwork" value="&lt;b&gt;&lt;&lt;interface&gt;&gt;&lt;/b&gt;&lt;br/&gt;&lt;b&gt;IUnitOfWork&lt;/b&gt;&lt;br/&gt;+ Appointments&lt;br/&gt;+ Branches&lt;br/&gt;+ AdminUsers&lt;br/&gt;+ CommitAsync()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#272673;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="880" y="140" width="180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="domainex" value="&lt;b&gt;DomainException&lt;/b&gt;&lt;br/&gt;Reglas de negocio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="140" width="60" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Application Layer -->
+        <mxCell id="application-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#272673;strokeWidth=3;opacity=50;" vertex="1" parent="1">
+          <mxGeometry x="100" y="320" width="1060" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="application-label" value="🟢 Application Layer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#272673;" vertex="1" parent="1">
+          <mxGeometry x="110" y="325" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="appointmentservice" value="&lt;b&gt;AppointmentService&lt;/b&gt;&lt;br/&gt;+ CreateAsync()&lt;br/&gt;+ ActivateAsync()&lt;br/&gt;+ GetAllAsync()&lt;br/&gt;+ ProcessExpiredAsync()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="120" y="360" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="branchservice" value="&lt;b&gt;BranchService&lt;/b&gt;&lt;br/&gt;+ CreateAsync()&lt;br/&gt;+ GetAllActiveAsync()&lt;br/&gt;+ UpdateAsync()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="340" y="360" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="authservice" value="&lt;b&gt;AuthService&lt;/b&gt;&lt;br/&gt;+ AdminLoginAsync()&lt;br/&gt;+ ClientLoginAsync()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="540" y="360" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="dtos" value="&lt;b&gt;DTOs&lt;/b&gt;&lt;br/&gt;- AppointmentResponse&lt;br/&gt;- BranchResponse&lt;br/&gt;- AuthResponse&lt;br/&gt;- ApiResponse&lt;T&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="740" y="360" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ifaces" value="&lt;b&gt;Interfaces&lt;/b&gt;&lt;br/&gt;- IJwtTokenGenerator&lt;br/&gt;- IPasswordHasher&lt;br/&gt;- IServiceInterfaces" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#272673;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="940" y="360" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Infrastructure Layer -->
+        <mxCell id="infra-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#272673;strokeWidth=3;opacity=50;" vertex="1" parent="1">
+          <mxGeometry x="100" y="520" width="1060" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="infra-label" value="🟠 Infrastructure Layer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#272673;" vertex="1" parent="1">
+          <mxGeometry x="110" y="525" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="appdbcontext" value="&lt;b&gt;AppDbContext&lt;/b&gt;&lt;br/&gt;EF Core DbContext&lt;br/&gt;- Appointments&lt;br/&gt;- Branches&lt;br/&gt;- AdminUsers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="120" y="560" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="repos" value="&lt;b&gt;Repositories&lt;/b&gt;&lt;br/&gt;- AppointmentRepository&lt;br/&gt;- BranchRepository&lt;br/&gt;- AdminUserRepository" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="320" y="560" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="unitofwork" value="&lt;b&gt;UnitOfWork&lt;/b&gt;&lt;br/&gt;Implementa IUnitOfWork&lt;br/&gt;+ CommitAsync()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="540" y="560" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="jwtgen" value="&lt;b&gt;JwtTokenGenerator&lt;/b&gt;&lt;br/&gt;Implementa IJwtTokenGenerator&lt;br/&gt;+ GenerateToken()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="740" y="560" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="bcrypt" value="&lt;b&gt;BcryptPasswordHasher&lt;/b&gt;&lt;br/&gt;Implementa IPasswordHasher&lt;br/&gt;WorkFactor: 12" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="960" y="560" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- API Layer -->
+        <mxCell id="api-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#272673;strokeWidth=3;opacity=50;" vertex="1" parent="1">
+          <mxGeometry x="100" y="720" width="1060" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="api-label" value="🟣 API Layer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#272673;" vertex="1" parent="1">
+          <mxGeometry x="110" y="725" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="authcontroller" value="&lt;b&gt;AuthController&lt;/b&gt;&lt;br/&gt;POST /login-admin&lt;br/&gt;POST /login-client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="120" y="760" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="appointmentscontroller" value="&lt;b&gt;AppointmentsController&lt;/b&gt;&lt;br/&gt;POST /appointments&lt;br/&gt;GET /appointments&lt;br/&gt;PUT /{id}/activate&lt;br/&gt;PUT /{id}/status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="320" y="760" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="branchescontroller" value="&lt;b&gt;BranchesController&lt;/b&gt;&lt;br/&gt;GET /branches&lt;br/&gt;POST /branches&lt;br/&gt;PUT /branches/{id}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="540" y="760" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="middleware" value="&lt;b&gt;ExceptionHandlingMiddleware&lt;/b&gt;&lt;br/&gt;DomainException → 400&lt;br/&gt;Exception → 500" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="740" y="760" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="bgservice" value="&lt;b&gt;AppointmentExpirationService&lt;/b&gt;&lt;br/&gt;BackgroundService&lt;br/&gt;Cada 1 minuto" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#272673;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="960" y="760" width="180" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Dependency arrows -->
+        <mxCell id="arrow1" value="depende de" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;dashed=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="application-bg" target="domain-bg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow2" value="depende de" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;dashed=1;" edge="1" parent="1" source="infra-bg" target="application-bg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow3" value="depende de" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;dashed=1;" edge="1" parent="1" source="api-bg" target="infra-bg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- DIAGRAMA 2: Flujo de Autenticación -->
+  <diagram id="auth-flow" name="Flujo de Autenticación">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title2" value="Flujo de Autenticación JWT" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#1a2047;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="600" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Actors -->
+        <mxCell id="client-actor" value="👤&lt;br/&gt;&lt;b&gt;Cliente&lt;/b&gt;&lt;br/&gt;(Cédula)" style="shape=mxgraph.flowchart.start_2;fillColor=#272673;strokeColor=#1a2047;fontColor=#ffffff;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="100" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-actor" value="👨‍💼&lt;br/&gt;&lt;b&gt;Admin&lt;/b&gt;&lt;br/&gt;(User+Pass)" style="shape=mxgraph.flowchart.start_2;fillColor=#1a2047;strokeColor=#272673;fontColor=#ffffff;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="280" width="100" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Angular Frontend -->
+        <mxCell id="angular" value="🖥️&lt;br/&gt;&lt;b&gt;TurnosWeb&lt;/b&gt;&lt;br/&gt;Angular 21" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#272673;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- API -->
+        <mxCell id="api" value="⚡&lt;br/&gt;&lt;b&gt;TurnosAPI&lt;/b&gt;&lt;br/&gt;ASP.NET Core 8" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#272673;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- JWT -->
+        <mxCell id="jwt" value="🔑&lt;br/&gt;&lt;b&gt;JWT Token&lt;/b&gt;&lt;br/&gt;Role + Identifier" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Database -->
+        <mxCell id="db" value="🗄️&lt;br/&gt;&lt;b&gt;SQL Server&lt;/b&gt;&lt;br/&gt;TurnosDB" style="shape=mxgraph.flowchart.database;fillColor=#f5f5f5;strokeColor=#272673;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="320" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Flow arrows -->
+        <mxCell id="f1" value="1. Cédula" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;exitX=1;exitY=0.5;" edge="1" parent="1" source="client-actor" target="angular">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f2" value="2. POST /login-client" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;" edge="1" parent="1" source="angular" target="api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f3" value="3. Verificar" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;" edge="1" parent="1" source="api" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f4" value="4. JWT Token" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;" edge="1" parent="1" source="api" target="jwt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f5" value="5. Guardar en localStorage" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;" edge="1" parent="1" source="jwt" target="angular">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="920" y="300" /><mxPoint x="360" y="300" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f6" value="6. Authorization: Bearer {token}" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;dashed=1;" edge="1" parent="1" source="angular" target="api">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="360" y="380" /><mxPoint x="640" y="380" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="f7" value="1. User+Pass" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1a2047;strokeWidth=2;" edge="1" parent="1" source="admin-actor" target="angular">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- BCrypt note -->
+        <mxCell id="bcrypt-note" value="🔒 BCrypt verify&lt;br/&gt;(solo Admin)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="760" y="340" width="120" height="50" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- DIAGRAMA 3: Ciclo de vida del turno -->
+  <diagram id="appointment-lifecycle" name="Ciclo de Vida del Turno">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title3" value="Ciclo de Vida del Turno" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#1a2047;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="600" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- States -->
+        <mxCell id="start" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#272673;strokeColor=#1a2047;" vertex="1" parent="1">
+          <mxGeometry x="480" y="80" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="pending" value="⏳&lt;br/&gt;&lt;b&gt;PENDIENTE&lt;/b&gt;&lt;br/&gt;Turno creado&lt;br/&gt;15 min para activar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="160" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="active" value="✅&lt;br/&gt;&lt;b&gt;ACTIVO&lt;/b&gt;&lt;br/&gt;Cliente llegó&lt;br/&gt;a la sucursal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1fae5;strokeColor=#059669;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="340" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="attended" value="🏆&lt;br/&gt;&lt;b&gt;ATENDIDO&lt;/b&gt;&lt;br/&gt;Servicio completado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#2563eb;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="520" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="expired" value="⌛&lt;br/&gt;&lt;b&gt;EXPIRADO&lt;/b&gt;&lt;br/&gt;No llegó en 15 min&lt;br/&gt;(Background Service)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="160" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="cancelled" value="❌&lt;br/&gt;&lt;b&gt;CANCELADO&lt;/b&gt;&lt;br/&gt;Cliente o Admin&lt;br/&gt;canceló el turno" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3f4f6;strokeColor=#6b7280;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="160" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="end" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#272673;strokeColor=#1a2047;" vertex="1" parent="1">
+          <mxGeometry x="480" y="660" width="40" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Transitions -->
+        <mxCell id="t1" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;" edge="1" parent="1" source="start" target="pending">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t2" value="Cliente activa&lt;br/&gt;(dentro de 15 min)" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#059669;strokeWidth=2;fontColor=#059669;" edge="1" parent="1" source="pending" target="active">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3" value="Admin marca&lt;br/&gt;como atendido" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#2563eb;strokeWidth=2;fontColor=#2563eb;" edge="1" parent="1" source="active" target="attended">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4" value="Pasan 15 min&lt;br/&gt;sin activar" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#dc2626;strokeWidth=2;fontColor=#dc2626;" edge="1" parent="1" source="pending" target="expired">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t5" value="Cliente/Admin&lt;br/&gt;cancela" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6b7280;strokeWidth=2;fontColor=#6b7280;" edge="1" parent="1" source="pending" target="cancelled">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t6" value="Admin/Cliente&lt;br/&gt;cancela activo" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#6b7280;strokeWidth=2;fontColor=#6b7280;" edge="1" parent="1" source="active" target="cancelled">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="400" y="390" /><mxPoint x="220" y="390" /><mxPoint x="220" y="210" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="t7" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;" edge="1" parent="1" source="attended" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t8" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;" edge="1" parent="1" source="expired" target="end">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="880" y="260" /><mxPoint x="880" y="680" /><mxPoint x="520" y="680" /></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="t9" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;" edge="1" parent="1" source="cancelled" target="end">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="120" y="260" /><mxPoint x="120" y="680" /><mxPoint x="480" y="680" /></Array></mxGeometry>
+        </mxCell>
+
+        <!-- Business rules note -->
+        <mxCell id="rules-note" value="&lt;b&gt;Reglas de Negocio:&lt;/b&gt;&lt;br/&gt;• Máx. 5 turnos/cliente/día&lt;br/&gt;• No crear si tiene uno Pendiente/Activo&lt;br/&gt;• Background service expira cada 1 min" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="700" y="420" width="300" height="80" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- DIAGRAMA 4: Modelo de Base de Datos -->
+  <diagram id="database-model" name="Modelo de Base de Datos">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title4" value="Modelo de Base de Datos — TurnosDB" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#1a2047;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="600" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Branches Table -->
+        <mxCell id="branches-header" value="🏢 Branches" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#272673;strokeColor=#1a2047;fontColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="100" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="branches-body" value="🔑 Id (UNIQUEIDENTIFIER PK)&lt;br/&gt;Name (NVARCHAR 100)&lt;br/&gt;Address (NVARCHAR 200)&lt;br/&gt;City (NVARCHAR 100)&lt;br/&gt;IsActive (BIT)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#272673;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="100" y="140" width="280" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- AdminUsers Table -->
+        <mxCell id="adminusers-header" value="👨‍💼 AdminUsers" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#272673;strokeColor=#1a2047;fontColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="100" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="adminusers-body" value="🔑 Id (UNIQUEIDENTIFIER PK)&lt;br/&gt;Username (NVARCHAR 50) UNIQUE&lt;br/&gt;PasswordHash (NVARCHAR MAX)&lt;br/&gt;FullName (NVARCHAR 100)&lt;br/&gt;Role (NVARCHAR 50)&lt;br/&gt;IsActive (BIT)&lt;br/&gt;CreatedAt (DATETIME2)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#272673;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="700" y="140" width="280" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Appointments Table -->
+        <mxCell id="appointments-header" value="📋 Appointments" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#272673;strokeColor=#1a2047;fontColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="360" width="380" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="appointments-body" value="🔑 Id (UNIQUEIDENTIFIER PK)&lt;br/&gt;Code (NVARCHAR 20)&lt;br/&gt;CustomerIdNumber (NVARCHAR 20) IDX&lt;br/&gt;🔗 BranchId (UNIQUEIDENTIFIER FK)&lt;br/&gt;Status (NVARCHAR 50)&lt;br/&gt;CreatedAt (DATETIME2) IDX&lt;br/&gt;ExpiresAt (DATETIME2)&lt;br/&gt;ActivatedAt (DATETIME2 NULL)&lt;br/&gt;AttendedAt (DATETIME2 NULL)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#272673;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="350" y="400" width="380" height="200" as="geometry" />
+        </mxCell>
+
+        <!-- Indexes -->
+        <mxCell id="indexes-box" value="📑 &lt;b&gt;Índices&lt;/b&gt;&lt;br/&gt;IX_AdminUsers_Username (UNIQUE)&lt;br/&gt;IX_Appointments_CustomerIdNumber&lt;br/&gt;IX_Appointments_CustomerIdNumber_CreatedAt&lt;br/&gt;IX_Appointments_Status&lt;br/&gt;IX_Appointments_BranchId" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="700" y="380" width="320" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- FK Arrow -->
+        <mxCell id="fk-arrow" value="1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#272673;strokeWidth=2;endArrow=ERmany;startArrow=ERone;exitX=0.5;exitY=1;" edge="1" parent="1" source="branches-body" target="appointments-body">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+</mxfile>
