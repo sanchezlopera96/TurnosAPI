@@ -14,7 +14,11 @@ El sistema está compuesto por dos proyectos:
 
 ## 2. Arquitectura de la Solución
 
+![alt text](arquitectura-solucion.png)
+
 ### 2.1 Backend — Clean Architecture
+
+![alt text](arquitectura-1.png)
 
 La solución backend está dividida en 4 capas con dependencias que apuntan hacia adentro:
 ```
@@ -52,6 +56,8 @@ TurnosAPI.Tests           ← Pruebas unitarias
 - Configuración de la aplicación (`Program.cs`)
 
 ### 2.2 Frontend — Angular 21
+
+![alt text](arquitectura-2.png)
 ```
 src/app/
 ├── core/
