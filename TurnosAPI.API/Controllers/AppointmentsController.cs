@@ -57,18 +57,26 @@ public class AppointmentsController : ControllerBase
     [Authorize(Roles = "Client")]
     public async Task<IActionResult> Activate(Guid id, CancellationToken cancellationToken)
     {
-        var idNumber = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        var idNumber = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    ?? User.FindFirstValue("sub");
+
+        if (string.IsNullOrEmpty(idNumber))
+            return Unauthorized();
+
         var result = await _appointmentService.ActivateAsync(id, idNumber, cancellationToken);
         return result.Success ? Ok(result) : BadRequest(result);
     }
 
     [HttpPut("{id:guid}/status")]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public async Task<IActionResult> UpdateStatus(
         Guid id,
         [FromBody] UpdateAppointmentStatusRequest request,
         CancellationToken cancellationToken)
     {
+        if (User.IsInRole("Client") && request.Status.ToLower() != "cancelled")
+            return Forbid();
+
         var result = await _appointmentService.UpdateStatusAsync(id, request, cancellationToken);
         return result.Success ? Ok(result) : BadRequest(result);
     }
