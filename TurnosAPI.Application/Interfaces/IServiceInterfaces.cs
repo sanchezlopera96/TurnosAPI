@@ -8,8 +8,8 @@ public interface IAppointmentService
     Task<ApiResponse<AppointmentResponse>> CreateAsync(CreateAppointmentRequest request, CancellationToken cancellationToken = default);
     Task<ApiResponse<AppointmentResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<ApiResponse<IEnumerable<AppointmentResponse>>> GetByCustomerAsync(string idNumber, CancellationToken cancellationToken = default);
-    Task<ApiResponse<IEnumerable<AppointmentResponse>>> GetAllAsync(CancellationToken cancellationToken = default);
-    Task<ApiResponse<AppointmentResponse>> ActivateAsync(Guid id, string customerIdNumber, CancellationToken cancellationToken = default);
+    Task<ApiResponse<List<AppointmentResponse>>> GetAllAsync(Guid? branchId = null, string? status = null, bool todayOnly = true, CancellationToken cancellationToken = default);
+    Task<ApiResponse<AppointmentResponse>> ActivateAsync(Guid id,string customerIdNumber,bool isAdmin = false, CancellationToken cancellationToken = default);
     Task<ApiResponse<AppointmentResponse>> UpdateStatusAsync(Guid id, UpdateAppointmentStatusRequest request, CancellationToken cancellationToken = default);
     Task ProcessExpiredAppointmentsAsync(CancellationToken cancellationToken = default);
 }

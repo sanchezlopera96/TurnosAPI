@@ -30,9 +30,13 @@ public class AppointmentsController : ControllerBase
 
     [HttpGet]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAll(
+        [FromQuery] Guid? branchId,
+        [FromQuery] string? status,
+        [FromQuery] bool todayOnly = true,
+        CancellationToken cancellationToken = default)
     {
-        var result = await _appointmentService.GetAllAsync(cancellationToken);
+        var result = await _appointmentService.GetAllAsync(branchId, status, todayOnly, cancellationToken);
         return Ok(result);
     }
 
@@ -54,16 +58,13 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpPut("{id:guid}/activate")]
-    [Authorize(Roles = "Client")]
+    [Authorize]
     public async Task<IActionResult> Activate(Guid id, CancellationToken cancellationToken)
     {
-        var idNumber = User.FindFirstValue(ClaimTypes.NameIdentifier)
-                    ?? User.FindFirstValue("sub");
+        var isAdmin = User.IsInRole("Admin");
+        var idNumber = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub") ?? "";
 
-        if (string.IsNullOrEmpty(idNumber))
-            return Unauthorized();
-
-        var result = await _appointmentService.ActivateAsync(id, idNumber, cancellationToken);
+        var result = await _appointmentService.ActivateAsync(id, idNumber, isAdmin, cancellationToken);
         return result.Success ? Ok(result) : BadRequest(result);
     }
 
