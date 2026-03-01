@@ -71,4 +71,15 @@ public class Appointment
         if (Status == AppointmentStatus.Attended || Status == AppointmentStatus.Expired)
             throw new DomainException("Cannot cancel an already attended or expired appointment.");
 
-        Status =
+        Status = AppointmentStatus.Cancelled;
+    }
+
+    public bool IsWithinTimeWindow() => DateTime.UtcNow <= ExpiresAt;
+
+    private static string GenerateCode()
+    {
+        var timestamp = DateTime.UtcNow.ToString("HHmmss");
+        var random = new Random().Next(100, 999);
+        return $"T{timestamp}{random}";
+    }
+}
