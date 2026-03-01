@@ -19,19 +19,29 @@ public class AppointmentService : IAppointmentService
     }
 
     public async Task<ApiResponse<AppointmentResponse>> CreateAsync(
-        CreateAppointmentRequest request,
-        CancellationToken cancellationToken = default)
+    CreateAppointmentRequest request,
+    CancellationToken cancellationToken = default)
     {
+        var activeAppointment = (await _unitOfWork.Appointments
+            .GetByCustomerIdNumberAsync(request.CustomerIdNumber, cancellationToken))
+            .FirstOrDefault(a =>
+                a.Status == AppointmentStatus.Pending ||
+                a.Status == AppointmentStatus.Active);
+
+        if (activeAppointment != null)
+            return ApiResponse<AppointmentResponse>.Fail(
+                "Ya tienes un turno activo o pendiente. Espera a que expire o sea atendido antes de crear uno nuevo.");
+
         var todayCount = await _unitOfWork.Appointments
             .CountByCustomerTodayAsync(request.CustomerIdNumber, cancellationToken);
 
         if (todayCount >= MaxDailyAppointments)
             return ApiResponse<AppointmentResponse>.Fail(
-                $"You have reached the daily limit of {MaxDailyAppointments} appointments. Please try again tomorrow.");
+                $"Has alcanzado el límite de {MaxDailyAppointments} turnos por día. Intenta nuevamente mañana.");
 
         var branch = await _unitOfWork.Branches.GetByIdAsync(request.BranchId, cancellationToken);
         if (branch is null || !branch.IsActive)
-            return ApiResponse<AppointmentResponse>.Fail("The selected branch does not exist or is not active.");
+            return ApiResponse<AppointmentResponse>.Fail("La sucursal seleccionada no existe o no está activa.");
 
         var appointment = new Appointment(request.CustomerIdNumber, request.BranchId);
         await _unitOfWork.Appointments.AddAsync(appointment, cancellationToken);
@@ -39,7 +49,7 @@ public class AppointmentService : IAppointmentService
 
         return ApiResponse<AppointmentResponse>.Ok(
             MapToResponse(appointment, branch.Name),
-            "Appointment created successfully. You have 15 minutes to arrive at the branch.");
+            "Turno agendado exitosamente. Tienes 15 minutos para llegar a la sucursal.");
     }
 
     public async Task<ApiResponse<AppointmentResponse>> GetByIdAsync(
@@ -48,7 +58,7 @@ public class AppointmentService : IAppointmentService
     {
         var appointment = await _unitOfWork.Appointments.GetByIdAsync(id, cancellationToken);
         if (appointment is null)
-            return ApiResponse<AppointmentResponse>.Fail("Appointment not found.");
+            return ApiResponse<AppointmentResponse>.Fail("Turno no encontrado.");
 
         var branch = await _unitOfWork.Branches.GetByIdAsync(appointment.BranchId, cancellationToken);
         return ApiResponse<AppointmentResponse>.Ok(MapToResponse(appointment, branch?.Name ?? "Unknown"));
@@ -80,7 +90,7 @@ public class AppointmentService : IAppointmentService
         foreach (var appt in appointments)
         {
             var branch = await _unitOfWork.Branches.GetByIdAsync(appt.BranchId, cancellationToken);
-            responses.Add(MapToResponse(appt, branch?.Name ?? "Unknown"));
+            responses.Add(MapToResponse(appt, branch?.Name ?? "Desconocida"));
         }
 
         return ApiResponse<IEnumerable<AppointmentResponse>>.Ok(responses);
@@ -93,10 +103,10 @@ public class AppointmentService : IAppointmentService
     {
         var appointment = await _unitOfWork.Appointments.GetByIdAsync(id, cancellationToken);
         if (appointment is null)
-            return ApiResponse<AppointmentResponse>.Fail("Appointment not found.");
+            return ApiResponse<AppointmentResponse>.Fail("Turno no encontrado.");
 
         if (appointment.CustomerIdNumber != customerIdNumber)
-            return ApiResponse<AppointmentResponse>.Fail("You are not authorized to activate this appointment.");
+            return ApiResponse<AppointmentResponse>.Fail("No estás autorizado para activar este turno.");
 
         try
         {
@@ -112,8 +122,8 @@ public class AppointmentService : IAppointmentService
 
         var branch = await _unitOfWork.Branches.GetByIdAsync(appointment.BranchId, cancellationToken);
         return ApiResponse<AppointmentResponse>.Ok(
-            MapToResponse(appointment, branch?.Name ?? "Unknown"),
-            "Appointment activated successfully.");
+            MapToResponse(appointment, branch?.Name ?? "Desconocida"),
+            "Turno activado exitosamente.");
     }
 
     public async Task<ApiResponse<AppointmentResponse>> UpdateStatusAsync(
@@ -123,7 +133,7 @@ public class AppointmentService : IAppointmentService
     {
         var appointment = await _unitOfWork.Appointments.GetByIdAsync(id, cancellationToken);
         if (appointment is null)
-            return ApiResponse<AppointmentResponse>.Fail("Appointment not found.");
+            return ApiResponse<AppointmentResponse>.Fail("Turno no encontrado.");
 
         try
         {
@@ -136,7 +146,7 @@ public class AppointmentService : IAppointmentService
                     appointment.Cancel();
                     break;
                 default:
-                    return ApiResponse<AppointmentResponse>.Fail("Invalid status. Valid values: 'Attended', 'Cancelled'.");
+                    return ApiResponse<AppointmentResponse>.Fail("Estado inválido. Valores válidos: 'Attended', 'Cancelled'.");
             }
         }
         catch (DomainException ex)
@@ -148,7 +158,7 @@ public class AppointmentService : IAppointmentService
         await _unitOfWork.CommitAsync(cancellationToken);
 
         var branch = await _unitOfWork.Branches.GetByIdAsync(appointment.BranchId, cancellationToken);
-        return ApiResponse<AppointmentResponse>.Ok(MapToResponse(appointment, branch?.Name ?? "Unknown"));
+        return ApiResponse<AppointmentResponse>.Ok(MapToResponse(appointment, branch?.Name ?? "Desconocida"));
     }
 
     public async Task ProcessExpiredAppointmentsAsync(CancellationToken cancellationToken = default)

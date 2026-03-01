@@ -22,7 +22,7 @@ public class BranchService : IBranchService
         var branch = new Branch(request.Name, request.Address, request.City);
         await _unitOfWork.Branches.AddAsync(branch, cancellationToken);
         await _unitOfWork.CommitAsync(cancellationToken);
-        return ApiResponse<BranchResponse>.Ok(MapToResponse(branch), "Branch created successfully.");
+        return ApiResponse<BranchResponse>.Ok(MapToResponse(branch), "Sucursal creada exitosamente.");
     }
 
     public async Task<ApiResponse<IEnumerable<BranchResponse>>> GetAllActiveAsync(
@@ -38,7 +38,7 @@ public class BranchService : IBranchService
     {
         var branch = await _unitOfWork.Branches.GetByIdAsync(id, cancellationToken);
         if (branch is null)
-            return ApiResponse<BranchResponse>.Fail("Branch not found.");
+            return ApiResponse<BranchResponse>.Fail("Sucursal no encontrada.");
 
         return ApiResponse<BranchResponse>.Ok(MapToResponse(branch));
     }
@@ -50,12 +50,12 @@ public class BranchService : IBranchService
     {
         var branch = await _unitOfWork.Branches.GetByIdAsync(id, cancellationToken);
         if (branch is null)
-            return ApiResponse<BranchResponse>.Fail("Branch not found.");
+            return ApiResponse<BranchResponse>.Fail("Sucursal no encontrada.");
 
         branch.Update(request.Name, request.Address, request.City);
         _unitOfWork.Branches.Update(branch);
         await _unitOfWork.CommitAsync(cancellationToken);
-        return ApiResponse<BranchResponse>.Ok(MapToResponse(branch), "Branch updated successfully.");
+        return ApiResponse<BranchResponse>.Ok(MapToResponse(branch), "Sucursal actualizada exitosamente.");
     }
 
     private static BranchResponse MapToResponse(Branch branch) =>

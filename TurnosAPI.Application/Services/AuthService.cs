@@ -29,16 +29,16 @@ public class AuthService : IAuthService
             request.Username.Trim().ToLower(), cancellationToken);
 
         if (user is null || !user.IsActive)
-            return ApiResponse<AuthResponse>.Fail("Invalid credentials.");
+            return ApiResponse<AuthResponse>.Fail("Credenciales inválidas.");
 
         if (!_passwordHasher.Verify(request.Password, user.PasswordHash))
-            return ApiResponse<AuthResponse>.Fail("Invalid credentials.");
+            return ApiResponse<AuthResponse>.Fail("Credenciales inválidas.");
 
         var token = _tokenGenerator.GenerateToken(user.Username, "Admin", out var expiresAt);
 
         return ApiResponse<AuthResponse>.Ok(
             new AuthResponse(token, "Admin", user.Username, expiresAt),
-            "Login successful.");
+            "Inicio de sesión exitoso.");
     }
 
     public Task<ApiResponse<AuthResponse>> ClientLoginAsync(
@@ -49,6 +49,6 @@ public class AuthService : IAuthService
 
         return Task.FromResult(ApiResponse<AuthResponse>.Ok(
             new AuthResponse(token, "Client", request.IdNumber, expiresAt),
-            "Login successful."));
+            "Inicio de sesión exitoso."));
     }
 }
