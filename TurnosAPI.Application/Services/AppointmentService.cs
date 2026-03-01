@@ -81,49 +81,50 @@ public class AppointmentService : IAppointmentService
         return ApiResponse<IEnumerable<AppointmentResponse>>.Ok(responses);
     }
 
-    public async Task<ApiResponse<IEnumerable<AppointmentResponse>>> GetAllAsync(
+    public async Task<ApiResponse<List<AppointmentResponse>>> GetAllAsync(
+        Guid? branchId = null,
+        string? status = null,
+        bool todayOnly = true,
         CancellationToken cancellationToken = default)
     {
-        var appointments = await _unitOfWork.Appointments.GetAllAsync(cancellationToken);
-        var responses = new List<AppointmentResponse>();
+        var appointments = await _unitOfWork.Appointments
+            .GetAllFilteredAsync(branchId, status, todayOnly, cancellationToken);
 
-        foreach (var appt in appointments)
-        {
-            var branch = await _unitOfWork.Branches.GetByIdAsync(appt.BranchId, cancellationToken);
-            responses.Add(MapToResponse(appt, branch?.Name ?? "Desconocida"));
-        }
+        var response = appointments
+            .Select(a => MapToResponse(a, a.Branch?.Name ?? ""))
+            .ToList();
 
-        return ApiResponse<IEnumerable<AppointmentResponse>>.Ok(responses);
+        return ApiResponse<List<AppointmentResponse>>.Ok(response, "Success");
     }
 
     public async Task<ApiResponse<AppointmentResponse>> ActivateAsync(
-        Guid id,
-        string customerIdNumber,
-        CancellationToken cancellationToken = default)
+    Guid id,
+    string customerIdNumber,
+    bool isAdmin = false,
+    CancellationToken cancellationToken = default)
     {
         var appointment = await _unitOfWork.Appointments.GetByIdAsync(id, cancellationToken);
         if (appointment is null)
             return ApiResponse<AppointmentResponse>.Fail("Turno no encontrado.");
 
-        if (appointment.CustomerIdNumber != customerIdNumber)
+        if (!isAdmin && appointment.CustomerIdNumber != customerIdNumber)
             return ApiResponse<AppointmentResponse>.Fail("No estás autorizado para activar este turno.");
 
         try
         {
             appointment.Activate();
+            _unitOfWork.Appointments.Update(appointment);
+            await _unitOfWork.CommitAsync(cancellationToken);
+
+            var branch = await _unitOfWork.Branches.GetByIdAsync(appointment.BranchId, cancellationToken);
+            return ApiResponse<AppointmentResponse>.Ok(
+                MapToResponse(appointment, branch?.Name ?? ""),
+                "Turno activado exitosamente.");
         }
         catch (DomainException ex)
         {
             return ApiResponse<AppointmentResponse>.Fail(ex.Message);
         }
-
-        _unitOfWork.Appointments.Update(appointment);
-        await _unitOfWork.CommitAsync(cancellationToken);
-
-        var branch = await _unitOfWork.Branches.GetByIdAsync(appointment.BranchId, cancellationToken);
-        return ApiResponse<AppointmentResponse>.Ok(
-            MapToResponse(appointment, branch?.Name ?? "Desconocida"),
-            "Turno activado exitosamente.");
     }
 
     public async Task<ApiResponse<AppointmentResponse>> UpdateStatusAsync(

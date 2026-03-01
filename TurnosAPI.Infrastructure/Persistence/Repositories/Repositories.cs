@@ -33,6 +33,33 @@ public class AppointmentRepository : IAppointmentRepository
             .OrderByDescending(a => a.CreatedAt)
             .ToListAsync(cancellationToken);
 
+    public async Task<List<Appointment>> GetAllFilteredAsync(
+    Guid? branchId,
+    string? status,
+    bool todayOnly,
+    CancellationToken cancellationToken)
+    {
+        var query = _context.Appointments
+            .Include(a => a.Branch)
+            .AsQueryable();
+
+        if (branchId.HasValue)
+            query = query.Where(a => a.BranchId == branchId.Value);
+
+        if (!string.IsNullOrEmpty(status) && Enum.TryParse<AppointmentStatus>(status, out var statusEnum))
+            query = query.Where(a => a.Status == statusEnum);
+
+        if (todayOnly)
+        {
+            var today = DateTime.UtcNow.Date;
+            query = query.Where(a => a.CreatedAt.Date == today);
+        }
+
+        return await query
+            .OrderByDescending(a => a.CreatedAt)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<IEnumerable<Appointment>> GetByBranchAsync(
         Guid branchId, CancellationToken cancellationToken = default)
         => await _context.Appointments

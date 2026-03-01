@@ -7,6 +7,7 @@ public interface IAppointmentRepository
     Task<Appointment?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<IEnumerable<Appointment>> GetByCustomerIdNumberAsync(string idNumber, CancellationToken cancellationToken = default);
     Task<IEnumerable<Appointment>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<List<Appointment>> GetAllFilteredAsync(Guid? branchId, string? status, bool todayOnly, CancellationToken cancellationToken);
     Task<IEnumerable<Appointment>> GetByBranchAsync(Guid branchId, CancellationToken cancellationToken = default);
     Task<int> CountByCustomerTodayAsync(string idNumber, CancellationToken cancellationToken = default);
     Task<IEnumerable<Appointment>> GetExpiredPendingAsync(CancellationToken cancellationToken = default);
