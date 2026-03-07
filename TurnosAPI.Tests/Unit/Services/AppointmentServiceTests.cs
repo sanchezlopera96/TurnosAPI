@@ -69,7 +69,7 @@ public class AppointmentServiceTests
 
         // Assert
         Assert.False(result.Success);
-        Assert.Contains("daily limit", result.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("límite", result.Message, StringComparison.OrdinalIgnoreCase);
         _appointmentRepoMock.Verify(r => r.AddAsync(It.IsAny<Appointment>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
@@ -93,7 +93,7 @@ public class AppointmentServiceTests
 
         // Assert
         Assert.False(result.Success);
-        Assert.Contains("branch", result.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("sucursal", result.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -112,7 +112,7 @@ public class AppointmentServiceTests
 
         // Assert
         Assert.False(result.Success);
-        Assert.Contains("not authorized", result.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("autorizado", result.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -129,7 +129,7 @@ public class AppointmentServiceTests
 
         // Assert
         Assert.False(result.Success);
-        Assert.Contains("not found", result.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("encontrado", result.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -151,6 +151,6 @@ public class AppointmentServiceTests
 
         // Assert
         Assert.False(result.Success);
-        Assert.Contains("Invalid status", result.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Estado inválido", result.Message, StringComparison.OrdinalIgnoreCase);
     }
 }
